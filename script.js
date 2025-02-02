@@ -88,7 +88,7 @@ const translations = {
         "register-text": "填写报名表，参与全球最具影响力的区块链黑客松！",
         "register-button": "报名参赛",
         "contact-us": "联系我们",
-        "contact-text": "如有任何问题，请发送邮件至",
+        "contact-text": "如有任何问题，请发送邮件至: hackathon.blockchain@terabox.jp ",
         "footer-text": "© 2024 链动未来 | 区块链黑客松"
     },
     "ja": {
@@ -145,7 +145,7 @@ const translations = {
         "register-text": "登録フォームに記入して、世界で最も影響力のあるブロックチェーンハッカソンに参加しよう！",
         "register-button": "登録する",
         "contact-us": "お問い合わせ",
-        "contact-text": "ご質問がございましたら、メールでお問い合わせください：",
+        "contact-text": "ご質問がございましたら、メールでお問い合わせください：hackathon.blockchain@terabox.jp ",
         "footer-text": "© 2024 未来をつなぐ | ブロックチェーンハッカソン"
     },
     "en": {
@@ -202,7 +202,7 @@ const translations = {
         "register-text": "Fill out the registration form and join the most influential blockchain hackathon!",
         "register-button": "Register Now",
         "contact-us": "Contact Us",
-        "contact-text": "If you have any questions, please send an email to ",
+        "contact-text": "If you have any questions, please send an email to: hackathon.blockchain@terabox.jp",
         "footer-text": "© 2024 Blockchain Future | Blockchain Hackathon"
     }
 };
@@ -254,22 +254,38 @@ function updateScheduleDates(lang) {
     });
 }
 
+// Update the switchLanguage function to properly handle the email
 function switchLanguage(lang) {
-    // 更新文本翻译
+    // Update text translations
     Object.keys(translations[lang]).forEach(id => {
-        let element = document.getElementById(id);
+        const element = document.getElementById(id);
         if (element) {
             element.textContent = translations[lang][id];
+            // For timeline items, add transition animation
+            if (element.closest('.timeline li')) {
+                element.style.transition = 'opacity 0.3s ease';
+                element.style.opacity = '0';
+                setTimeout(() => {
+                    element.style.opacity = '1';
+                }, 100);
+            }
         }
     });
 
-    // 更新日期格式
+    // Update dates format
     updateScheduleDates(lang);
 
-    // 更新邮件地址显示
-    let emailElement = document.querySelector("#contact-text a");
-    if (emailElement) {
-        emailElement.textContent = "hackathon@blockchain.com";
+    // Handle email contact specifically
+    const contactTextElement = document.getElementById('contact-text');
+    const emailLink = document.createElement('a');
+    emailLink.href = 'mailto:hackathon.blockchain@terabox.jp';
+    emailLink.textContent = 'hackathon.blockchain@terabox.jp';
+    
+    if (contactTextElement) {
+        // Clear existing content
+        contactTextElement.textContent = translations[lang]['contact-text'] + ' ';
+        // Append the email link
+        contactTextElement.appendChild(emailLink);
     }
 }
 
@@ -458,4 +474,87 @@ window.addEventListener('scroll', function() {
     });
 });
 
+// Add to translations object in script.js
+const guideTranslations = {
+    "zh": {
+        "guide-title": "NFT 开发指南",
+        "prep-title": "准备工作",
+        "contract-title": "智能合约开发",
+        "frontend-title": "前端开发",
+        "security-title": "安全与优化"
+    },
+    "ja": {
+        "guide-title": "NFT 開発ガイド",
+        "prep-title": "準備作業",
+        "contract-title": "スマートコントラクト開発",
+        "frontend-title": "フロントエンド開発",
+        "security-title": "セキュリティと最適化"
+    },
+    "en": {
+        "guide-title": "NFT Development Guide",
+        "prep-title": "Preparation",
+        "contract-title": "Smart Contract Development",
+        "frontend-title": "Frontend Development",
+        "security-title": "Security & Optimization"
+    }
+};
 
+// Merge with existing translations
+Object.keys(guideTranslations).forEach(lang => {
+    translations[lang] = { ...translations[lang], ...guideTranslations[lang] };
+});
+
+// Add to script.js
+function initializeGuideInteractions() {
+    document.querySelectorAll('.guide-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const details = header.parentElement;
+            const icon = header.querySelector('.expand-icon');
+            
+            // Add animation for smooth transition
+            if (details.open) {
+                icon.style.transform = 'rotate(0deg)';
+                icon.textContent = '+';
+            } else {
+                icon.style.transform = 'rotate(45deg)';
+                icon.textContent = '−';
+            }
+        });
+    });
+}
+
+// Initialize when the document is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeTimelineAnimations();
+    initializePrizeAnimations();
+    initializeButtonEffects();
+    initializeGuideInteractions();
+    
+    // Initialize with default language (Chinese)
+    switchLanguage('zh');
+});
+
+
+// Add to the existing translations object
+const lotteryTranslations = {
+    "zh": {
+        "lottery-title": "抽奖环节",
+        "lottery-subtitle": "点击了解更多关于硬件钱包的详情"
+    },
+    "ja": {
+        "lottery-title": "抽選会",
+        "lottery-subtitle": "ハードウェアウォレットの詳細はこちら"
+    },
+    "en": {
+        "lottery-title": "Lucky Draw",
+        "lottery-subtitle": "Click to learn more about hardware wallets"
+    }
+};
+
+// Add this to the existing translations in each language section
+Object.keys(translations).forEach(lang => {
+    translations[lang] = {
+        ...translations[lang],
+        ...lotteryTranslations[lang]
+    };
+});

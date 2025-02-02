@@ -52,26 +52,158 @@
     <h3>音乐NFT</h3>
 </div>
                 <!-- 建议：添加交互式3D模型展示 -->
-                <div class="gallery-item">
-                    <div class="nft-preview">
-                        <img src="images/nft/game1.jpg" alt="游戏资产">
-                    </div>
-                    <h3>游戏资产</h3>
-                </div>
+                <!-- New code -->
+<div class="gallery-item">
+    <div class="nft-preview">
+        <div class="video-container">
+            <iframe 
+                src="https://www.youtube.com/embed/2VzcEuZDpME" 
+                title="游戏资产 Video"
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+    <h3>游戏资产</h3>
+</div>
             </div>
         </section>
 
         <!-- YouTube 教程区域 -->
-        <section class="nft-tutorial">
-            <h2>NFT 开发指南</h2>
-            <div class="video-container">
-                <!-- 建议：嵌入NFT开发教程视频 -->
-                <div class="youtube-embed">
-                    <iframe width="560" height="315" src="about:blank" data-src="https://www.youtube.com/embed/YOUTUBE_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-                </div>
-            </div>
-        </section>
+        <!-- NFT Development Guide Section -->
+<section class="nft-tutorial section">
+    <div class="container">
+        <h2 id="guide-title">NFT 开发指南</h2>
+    
+    <!-- Introduction -->
+    <div class="guide-section">
+        <h3>介绍</h3>
+        <p>NFT（Non-Fungible Token，非同质化代币）是区块链技术中的一种独特资产，每个NFT都有唯一的标识符，不可互换。本指南将帮助你开始NFT和Web3开发之旅。</p>
+    </div>
 
+    <!-- Development Steps -->
+    <div class="guide-content">
+        <!-- Preparation -->
+        <div class="guide-card">
+            <details>
+                <summary class="guide-header">
+                    <h3>准备工作</h3>
+                    <span class="expand-icon">+</span>
+                </summary>
+                <div class="guide-details">
+                    <h4>必要工具安装</h4>
+                    <ul>
+                        <li>Node.js</li>
+                        <li>Truffle</li>
+                        <li>Ganache</li>
+                        <li>MetaMask</li>
+                        <li>IPFS</li>
+                    </ul>
+                    <div class="code-block">
+                        <details>
+                            <summary>安装命令</summary>
+                            <pre><code class="language-bash">
+npm install -g truffle
+# 创建项目
+mkdir nft-project
+cd nft-project
+truffle init
+npm install @openzeppelin/contracts</code></pre>
+                        </details>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Smart Contract Development -->
+        <div class="guide-card">
+            <details>
+                <summary class="guide-header">
+                    <h3>智能合约开发</h3>
+                    <span class="expand-icon">+</span>
+                </summary>
+                <div class="guide-details">
+                    <h4>NFT合约示例</h4>
+                    <div class="code-block">
+                        <details>
+                            <summary>MyNFT.sol</summary>
+                            <pre><code class="language-solidity">
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+
+contract MyNFT is ERC721 {
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIds;
+
+    constructor() ERC721("MyNFT", "MNFT") {}
+
+    function mintNFT(address recipient, string memory tokenURI)
+        public returns (uint256)
+    {
+        _tokenIds.increment();
+        uint256 newItemId = _tokenIds.current();
+        _mint(recipient, newItemId);
+        _setTokenURI(newItemId, tokenURI);
+        return newItemId;
+    }
+}</code></pre>
+                        </details>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Frontend Development -->
+        <div class="guide-card">
+            <details>
+                <summary class="guide-header">
+                    <h3>前端开发</h3>
+                    <span class="expand-icon">+</span>
+                </summary>
+                <div class="guide-details">
+                    <h4>React应用集成</h4>
+                    <div class="code-block">
+                        <details>
+                            <summary>Web3集成代码</summary>
+                            <pre><code class="language-javascript">
+import Web3 from 'web3';
+import MyNFT from '../build/contracts/MyNFT.json';
+
+const web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
+const contractAddress = MyNFT.networks[5777].address;
+const contract = new web3.eth.Contract(MyNFT.abi, contractAddress);
+
+export { web3, contract };</code></pre>
+                        </details>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Security and Optimization -->
+        <div class="guide-card">
+            <details>
+                <summary class="guide-header">
+                    <h3>安全与优化</h3>
+                    <span class="expand-icon">+</span>
+                </summary>
+                <div class="guide-details">
+                    <ul>
+                        <li>合约审计：部署前进行安全审计</li>
+                        <li>权限控制：实施严格的访问控制</li>
+                        <li>Gas优化：优化合约代码减少Gas消耗</li>
+                        <li>链下计算：合理利用链下存储和计算</li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+    </div>
+	</div>
+</section>
         <!-- 应用场景展示 -->
         <section class="use-cases">
             <h2>应用场景</h2>
