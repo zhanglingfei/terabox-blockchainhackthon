@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="gamefi-page-title">推动 GameFi 变革</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .gamefi-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .gamefi-content h2 {
+            font-size: 2.2rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .gamefi-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #008060, #00ae8c);
+        }
+
+        /* 游戏演示区域 */
+        .game-demo {
+            background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+            padding: 3rem 0;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .game-window {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 128, 96, 0.1);
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-window img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .game-window:hover img {
+            transform: scale(1.02);
+        }
+
+        .play-demo {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #008060;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 128, 96, 0.2);
+        }
+
+        .play-demo:hover {
+            background: #006848;
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 128, 96, 0.3);
+        }
+
+        /* 游戏经济模型区域 */
+        .tokenomics {
+            padding: 3rem 0;
+        }
+
+        .model-visualization {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 128, 96, 0.1);
+        }
+
+        .chart-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .model-explanation {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 128, 96, 0.1);
+        }
+
+        .model-explanation h3 {
+            color: #008060;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .model-explanation ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .model-explanation li {
+            margin: 1rem 0;
+            padding-left: 1.8rem;
+            position: relative;
+            color: #4a5568;
+        }
+
+        .model-explanation li::before {
+            content: "•";
+            color: #008060;
+            position: absolute;
+            left: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* 案例轮播区域 */
+        .case-studies {
+            background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+            padding: 3rem 0;
+            border-radius: 20px;
+            margin: 3rem 0;
+        }
+
+        .case-carousel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .case-slide {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 128, 96, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .case-slide:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 128, 96, 0.15);
+        }
+
+        .case-slide img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .case-content {
+            padding: 1.5rem;
+        }
+
+        .case-content h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .case-content p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        /* 开发者资源区域 */
+        .dev-resources {
+            padding: 3rem 0;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 128, 96, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 128, 96, 0.15);
+        }
+
+        .resource-card h3 {
+            color: #008060;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .resource-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .resource-card li {
+            margin: 0.8rem 0;
+            padding-left: 1.8rem;
+            position: relative;
+            color: #4a5568;
+        }
+
+        .resource-card li::before {
+            content: "•";
+            color: #008060;
+            position: absolute;
+            left: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .youtube-embed {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .youtube-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .model-visualization {
+                grid-template-columns: 1fr;
+            }
+
+            .gamefi-content {
+                padding: 1rem;
+            }
+
+            .game-window {
+                margin: 0 1rem;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .game-window,
+        .model-visualization > div,
+        .case-slide,
+        .resource-card {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 id="gamefi-header">推动 GameFi 变革</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html" id="nav-back">返回主页</a></li>
+                </ul>
+            </nav>
+            <div class="language-switch">
+                <a href="#" class="lang-btn" data-lang="zh">
+                    <img src="/api/placeholder/48/32" alt="中文">
+                </a>
+                <a href="#" class="lang-btn" data-lang="ja">
+                    <img src="/api/placeholder/48/32" alt="日本語">
+                </a>
+                <a href="#" class="lang-btn" data-lang="en">
+                    <img src="/api/placeholder/48/32" alt="English">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="gamefi-content">
+        <section class="game-demo">
+            <h2>GameFi 示例展示</h2>
+            <div class="game-preview">
+                <div class="game-window">
+                    <img src="/api/placeholder/800/450" alt="游戏预览">
+                    <button class="play-demo">试玩Demo</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="tokenomics">
+            <h2>游戏经济模型</h2>
+            <div class="model-visualization">
+                <div class="chart-container">
+                    <img src="/api/placeholder/500/400" alt="代币经济模型">
+                </div>
+                <div class="model-explanation">
+                    <h3>可持续的P2E机制</h3>
+                    <ul>
+                        <li>游戏代币经济设计</li>
+                        <li>通货膨胀控制机制</li>
+                        <li>多样化收益模式</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="case-studies">
+            <h2>成功案例解析</h2>
+            <div class="case-carousel">
+                <div class="case-slide">
+                    <img src="/api/placeholder/400/200" alt="案例1">
+                    <div class="case-content">
+                        <h3>案例标题1</h3>
+                        <p>案例描述...</p>
+                    </div>
+                </div>
+                <div class="case-slide">
+                    <img src="/api/placeholder/400/200" alt="案例2">
+                    <div class="case-content">
+                        <h3>案例标题2</h3>
+                        <p>案例描述...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="dev-resources">
+            <h2>开发者资源</h2>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <h3>SDK & API</h3>
+                    <ul>
+                        <li>游戏引擎集成</li>
+                        <li>区块链接口</li>
+                        <li>资产管理工具</li>
+                    </ul>
+                </div>
+                <div class="resource-card">
+                    <h3>教程与文档</h3>
+                    <div class="youtube-embed">
+                        <iframe src="about:blank" data-src="https://www.youtube.com/embed/YOUTUBE_VIDEO_ID" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p id="footer-text">© 2024 链动未来 | 区块链黑客松</p>
+            <p id="company-name">テラボックス株式会社</p>
+            <p id="company-address">〒104-0045 東京都中央区築地6丁目17-4 リードシー築地ビル 4F</p>
+            <p id="company-tel">TEL 03-5542-7798</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

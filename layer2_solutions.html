@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layer 2 方案</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Layer 2 专用样式 */
+        .layer2-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .layer2-content h2 {
+            font-size: 2.2rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .layer2-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #008060, #00ae8c);
+        }
+
+        /* Layer比较区域 */
+        .solutions-overview {
+            background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+            padding: 3rem 0;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .layer-comparison {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            padding: 0 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .layer1-box, .layer2-box {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 128, 96, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .layer1-box:hover, .layer2-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .layer1-box h3, .layer2-box h3 {
+            color: #008060;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        /* 技术方案对比表格 */
+        .tech-comparison {
+            padding: 3rem 0;
+        }
+
+        .comparison-table-wrapper {
+            overflow-x: auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 128, 96, 0.1);
+            margin: 2rem 0;
+        }
+
+        .tech-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .tech-table th {
+            background: #008060;
+            color: white;
+            padding: 1.2rem 1.5rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .tech-table td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #4a5568;
+        }
+
+        .tech-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tech-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .tech-table tr:hover td {
+            background: rgba(0, 128, 96, 0.05);
+        }
+
+        /* 技术原理卡片 */
+        .tech-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .tech-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 128, 96, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 128, 96, 0.15);
+        }
+
+        .tech-visual {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .tech-visual img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .tech-description h4 {
+            color: #008060;
+            margin-bottom: 1rem;
+        }
+
+        .tech-description ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tech-description li {
+            margin: 0.8rem 0;
+            padding-left: 1.8rem;
+            position: relative;
+        }
+
+        .tech-description li::before {
+            content: "•";
+            color: #008060;
+            position: absolute;
+            left: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* 开发指南区域 */
+        .development-guide {
+            background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+            padding: 3rem 0;
+            border-radius: 20px;
+            margin: 3rem 0;
+        }
+
+        .guide-content {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 3rem;
+            padding: 0 2rem;
+        }
+
+        .guide-steps {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 128, 96, 0.1);
+        }
+
+        .guide-steps ol {
+            padding-left: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .guide-steps li {
+            margin: 1rem 0;
+            color: #4a5568;
+        }
+
+        /* 实施案例展示 */
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .case-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 128, 96, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .case-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 128, 96, 0.15);
+        }
+
+        .case-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .case-content p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .layer-comparison,
+            .guide-content {
+                grid-template-columns: 1fr;
+            }
+
+            .layer2-content {
+                padding: 1rem;
+            }
+
+            .tech-categories {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .layer1-box,
+        .layer2-box,
+        .tech-card,
+        .case-card {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 id="layer2-header">Layer 2 方案</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">返回主页</a></li>
+                </ul>
+            </nav>
+            <div class="language-switch">
+                <a href="#" class="lang-btn" data-lang="zh">
+                    <img src="/api/placeholder/48/32" alt="中文">
+                </a>
+                <a href="#" class="lang-btn" data-lang="ja">
+                    <img src="/api/placeholder/48/32" alt="日本語">
+                </a>
+                <a href="#" class="lang-btn" data-lang="en">
+                    <img src="/api/placeholder/48/32" alt="English">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="layer2-content">
+        <section class="solutions-overview">
+            <h2>Layer 2 解决方案概述</h2>
+            <div class="layer-comparison">
+                <div class="layer1-box">
+                    <h3>Layer 1 (主链)</h3>
+                    <ul>
+                        <li>安全性保障</li>
+                        <li>去中心化</li>
+                        <li>共识机制</li>
+                    </ul>
+                </div>
+                <div class="layer2-box">
+                    <h3>Layer 2 (扩容层)</h3>
+                    <ul>
+                        <li>高吞吐量</li>
+                        <li>低交易成本</li>
+                        <li>快速确认</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="tech-comparison">
+            <h2>主流技术方案对比</h2>
+            <div class="comparison-table-wrapper">
+                <table class="tech-table">
+                    <thead>
+                        <tr>
+                            <th>解决方案</th>
+                            <th>Optimism</th>
+                            <th>Arbitrum</th>
+                            <th>StarkNet</th>
+                            <th>zkSync</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>技术类型</td>
+                            <td>Optimistic Rollup</td>
+                            <td>Optimistic Rollup</td>
+                            <td>ZK Rollup</td>
+                            <td>ZK Rollup</td>
+                        </tr>
+                        <tr>
+                            <td>TPS</td>
+                            <td>2000+</td>
+                            <td>4000+</td>
+                            <td>3000+</td>
+                            <td>2000+</td>
+                        </tr>
+                        <tr>
+                            <td>确认时间</td>
+                            <td>7天</td>
+                            <td>7天</td>
+                            <td>即时</td>
+                            <td>即时</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="technical-details">
+            <h2>技术原理解析</h2>
+            <div class="tech-categories">
+                <div class="tech-card">
+                    <h3>Optimistic Rollups</h3>
+                    <div class="tech-visual">
+                        <img src="/api/placeholder/400/300" alt="Optimistic Rollups原理">
+                    </div>
+                    <div class="tech-description">
+                        <h4>工作原理</h4>
+                        <ul>
+                            <li>批量提交交易</li>
+                            <li>欺诈证明机制</li>
+                            <li>挑战期验证</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tech-card">
+                    <h3>ZK Rollups</h3>
+                    <div class="tech-visual">
+                        <img src="/api/placeholder/400/300" alt="ZK Rollups原理">
+                    </div>
+                    <div class="tech-description">
+                        <h4>工作原理</h4>
+                        <ul>
+                            <li>零知识证明</li>
+                            <li>即时确认</li>
+                            <li>数据压缩</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="development-guide">
+            <h2>开发指南</h2>
+            <div class="guide-content">
+                <div class="video-section">
+                    <div class="video-container">
+                        <iframe src="about:blank" data-src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+                    </div>
+                    <h3>Layer 2 开发实战教程</h3>
+                </div>
+                <div class="guide-steps">
+                    <h3>快速开始</h3>
+                    <ol>
+                        <li>环境配置</li>
+                        <li>合约部署</li>
+                        <li>跨层交互</li>
+                        <li>数据验证</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section class="case-studies">
+            <h2>实施案例展示</h2>
+            <div class="cases-grid">
+                <div class="case-card">
+                    <h3>DEX案例</h3>
+                    <div class="case-content">
+                        <img src="/api/placeholder/400/300" alt="DEX案例">
+                        <p>去中心化交易所在Layer 2上的实现方案</p>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <h3>GameFi案例</h3>
+                    <div class="case-content">
+                        <img src="/api/placeholder/400/300" alt="GameFi案例">
+                        <p>游戏资产在Layer 2上的处理方案</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 链动未来 | 区块链黑客松</p>
+            <p>テラボックス株式会社</p>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 链动未来 | 区块链黑客松</p>
+            <p>テラボックス株式会社</p>
+            <p>〒104-0045 東京都中央区築地6丁目17-4 リードシー築地ビル 4F</p>
+            <p>TEL 03-5542-7798</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

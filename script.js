@@ -202,7 +202,7 @@ const translations = {
         "register-text": "Fill out the registration form and join the most influential blockchain hackathon!",
         "register-button": "Register Now",
         "contact-us": "Contact Us",
-        "contact-text": "If you have any questions, please send an email to",
+        "contact-text": "If you have any questions, please send an email to ",
         "footer-text": "© 2024 Blockchain Future | Blockchain Hackathon"
     }
 };
@@ -319,6 +319,143 @@ Object.keys(defiTranslations).forEach(lang => {
 });
 
 // Add click handler for DeFi ecosystem section
-document.getElementById('focus-areas').addEventListener('click', () => {
+document.getElementById('defi-title').addEventListener('click', () => {
     window.location.href = 'defi.html';
 });
+
+// 添加到现有的 script.js 文件末尾
+
+// 为时间线添加动画序列
+function initializeTimelineAnimations() {
+    const timelineItems = document.querySelectorAll('.timeline li');
+    timelineItems.forEach((item, index) => {
+        item.style.setProperty('--i', index);
+        
+        // 添加 Intersection Observer 来控制动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateX(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.2
+        });
+        
+        observer.observe(item);
+    });
+}
+
+// 为奖项卡片添加动画效果
+function initializePrizeAnimations() {
+    const prizes = document.querySelectorAll('.prize');
+    prizes.forEach(prize => {
+        prize.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+        });
+        
+        prize.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+}
+
+// 为注册按钮添加波纹效果
+function initializeButtonEffects() {
+    const registerBtn = document.querySelector('.btn');
+    if (registerBtn) {
+        registerBtn.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    }
+}
+
+// 更新日期格式化函数，添加更多本地化支持
+function formatDate(date, format, lang) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    
+    // 月份名称本地化
+    const monthNames = {
+        "zh": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+        "ja": ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+        "en": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    };
+    
+    return format
+        .replace("YYYY", year)
+        .replace("MMM", monthNames[lang][date.getMonth()])
+        .replace("M", month)
+        .replace("D", day);
+}
+
+// 优化切换语言函数
+function switchLanguage(lang) {
+    // 原有的语言切换逻辑保持不变
+    Object.keys(translations[lang]).forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = translations[lang][id];
+            // 为时间线项添加过渡动画
+            if (element.closest('.timeline li')) {
+                element.style.transition = 'opacity 0.3s ease';
+                element.style.opacity = '0';
+                setTimeout(() => {
+                    element.style.opacity = '1';
+                }, 100);
+            }
+        }
+    });
+
+    // 更新日期格式
+    updateScheduleDates(lang);
+
+    // 更新邮件地址显示
+    const emailElement = document.querySelector("#contact-text a");
+    if (emailElement) {
+        emailElement.textContent = "hackathon.blockchain@terabox.jp";
+    }
+}
+
+// 页面加载完成后初始化所有效果
+document.addEventListener('DOMContentLoaded', function() {
+    initializeTimelineAnimations();
+    initializePrizeAnimations();
+    initializeButtonEffects();
+    
+    // 初始化语言（默认使用中文）
+    switchLanguage('zh');
+});
+
+// 添加页面滚动动画
+window.addEventListener('scroll', function() {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        const isVisible = (rect.top <= window.innerHeight * 0.75) && (rect.bottom >= 0);
+        
+        if (isVisible) {
+            section.style.opacity = '1';
+            section.style.transform = 'translateY(0)';
+        }
+    });
+});
+
+
