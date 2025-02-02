@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+    <!-- Background -->
+    <rect width="800" height="600" fill="#1a1a2e" />
+    
+    <!-- Central Token Circle -->
+    <circle cx="400" cy="300" r="80" fill="#4CAF50" opacity="0.9" />
+    <text x="400" y="290" text-anchor="middle" fill="white" font-size="24" font-weight="bold">Game
+        <tspan x="400" y="320">Token</tspan>
+    </text>
+
+    <!-- Utility Mechanisms -->
+    <g id="tokenomics-elements">
+        <!-- Staking Pool -->
+        <g transform="translate(200,150)">
+            <rect x="-60" y="-30" width="120" height="60" rx="10" fill="#3498db" opacity="0.9" />
+            <text x="0" y="5" text-anchor="middle" fill="white" font-size="16">Staking Pool</text>
+            <text x="0" y="25" text-anchor="middle" fill="white" font-size="12">25% Supply</text>
+        </g>
+
+        <!-- Play to Earn -->
+        <g transform="translate(600,150)">
+            <rect x="-60" y="-30" width="120" height="60" rx="10" fill="#e74c3c" opacity="0.9" />
+            <text x="0" y="5" text-anchor="middle" fill="white" font-size="16">P2E Rewards</text>
+            <text x="0" y="25" text-anchor="middle" fill="white" font-size="12">30% Supply</text>
+        </g>
+
+        <!-- NFT Marketplace -->
+        <g transform="translate(200,450)">
+            <rect x="-60" y="-30" width="120" height="60" rx="10" fill="#9b59b6" opacity="0.9" />
+            <text x="0" y="5" text-anchor="middle" fill="white" font-size="16">NFT Market</text>
+            <text x="0" y="25" text-anchor="middle" fill="white" font-size="12">20% Supply</text>
+        </g>
+
+        <!-- Treasury -->
+        <g transform="translate(600,450)">
+            <rect x="-60" y="-30" width="120" height="60" rx="10" fill="#f1c40f" opacity="0.9" />
+            <text x="0" y="5" text-anchor="middle" fill="white" font-size="16">Treasury</text>
+            <text x="0" y="25" text-anchor="middle" fill="white" font-size="12">25% Supply</text>
+        </g>
+    </g>
+
+    <!-- Connection Lines -->
+    <g id="connection-lines" stroke-width="2" opacity="0.6">
+        <!-- Staking Pool Connection -->
+        <path d="M 260,150 L 340,250" stroke="#3498db" fill="none">
+            <animate attributeName="stroke-dasharray" from="0,1000" to="1000,1000" dur="2s" fill="freeze" />
+        </path>
+        <!-- P2E Connection -->
+        <path d="M 540,150 L 460,250" stroke="#e74c3c" fill="none">
+            <animate attributeName="stroke-dasharray" from="0,1000" to="1000,1000" dur="2s" fill="freeze" />
+        </path>
+        <!-- NFT Market Connection -->
+        <path d="M 260,450 L 340,350" stroke="#9b59b6" fill="none">
+            <animate attributeName="stroke-dasharray" from="0,1000" to="1000,1000" dur="2s" fill="freeze" />
+        </path>
+        <!-- Treasury Connection -->
+        <path d="M 540,450 L 460,350" stroke="#f1c40f" fill="none">
+            <animate attributeName="stroke-dasharray" from="0,1000" to="1000,1000" dur="2s" fill="freeze" />
+        </path>
+    </g>
+
+    <!-- Flow Indicators -->
+    <g id="flow-arrows">
+        <!-- Staking Flow -->
+        <circle cx="300" cy="200" r="5" fill="#3498db">
+            <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" />
+        </circle>
+        <!-- P2E Flow -->
+        <circle cx="500" cy="200" r="5" fill="#e74c3c">
+            <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" />
+        </circle>
+        <!-- NFT Flow -->
+        <circle cx="300" cy="400" r="5" fill="#9b59b6">
+            <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" />
+        </circle>
+        <!-- Treasury Flow -->
+        <circle cx="500" cy="400" r="5" fill="#f1c40f">
+            <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" />
+        </circle>
+    </g>
+
+    <!-- Token Distribution Legend -->
+    <g transform="translate(20,20)">
+        <text x="0" y="0" fill="white" font-size="18" font-weight="bold">Token Distribution</text>
+        <rect x="0" y="20" width="15" height="15" fill="#3498db"/>
+        <text x="25" y="33" fill="white" font-size="14">Staking (25%)</text>
+        <rect x="0" y="45" width="15" height="15" fill="#e74c3c"/>
+        <text x="25" y="58" fill="white" font-size="14">P2E Rewards (30%)</text>
+        <rect x="0" y="70" width="15" height="15" fill="#9b59b6"/>
+        <text x="25" y="83" fill="white" font-size="14">NFT Market (20%)</text>
+        <rect x="0" y="95" width="15" height="15" fill="#f1c40f"/>
+        <text x="25" y="108" fill="white" font-size="14">Treasury (25%)</text>
+    </g>
+</svg>
