@@ -207,6 +207,62 @@ const translations = {
     }
 };
 
+
+// Add NFT page specific translations
+const nftTranslations = {
+    "zh": {
+        "nft-page-title": "拓展 NFT 应用",
+        "nft-header": "拓展 NFT 应用",
+        "showcase-title": "NFT 创新应用展示",
+        "guide-title": "NFT 开发指南",
+        "use-cases-title": "应用场景",
+        "digital-art-title": "数字艺术市场",
+        "music-nft-title": "音乐产业革新",
+        "game-assets-title": "游戏资产互通",
+        // Guide sections
+        "prep-section": "准备工作",
+        "contract-section": "智能合约开发",
+        "frontend-section": "前端开发",
+        "security-section": "安全与优化"
+    },
+    "ja": {
+        "nft-page-title": "NFT アプリケーションの拡大",
+        "nft-header": "NFT アプリケーションの拡大",
+        "showcase-title": "NFT イノベーション展示",
+        "guide-title": "NFT 開発ガイド",
+        "use-cases-title": "活用シーン",
+        "digital-art-title": "デジタルアート市場",
+        "music-nft-title": "音楽産業革新",
+        "game-assets-title": "ゲーム資産の相互運用",
+        // Guide sections
+        "prep-section": "準備作業",
+        "contract-section": "スマートコントラクト開発",
+        "frontend-section": "フロントエンド開発",
+        "security-section": "セキュリティと最適化"
+    },
+    "en": {
+        "nft-page-title": "Expanding NFT Applications",
+        "nft-header": "Expanding NFT Applications",
+        "showcase-title": "NFT Innovation Showcase",
+        "guide-title": "NFT Development Guide",
+        "use-cases-title": "Use Cases",
+        "digital-art-title": "Digital Art Market",
+        "music-nft-title": "Music Industry Innovation",
+        "game-assets-title": "Game Asset Interoperability",
+        // Guide sections
+        "prep-section": "Preparation",
+        "contract-section": "Smart Contract Development",
+        "frontend-section": "Frontend Development",
+        "security-section": "Security & Optimization"
+    }
+};
+
+// Merge NFT translations with existing translations
+Object.keys(nftTranslations).forEach(lang => {
+    translations[lang] = { ...translations[lang], ...nftTranslations[lang] };
+});
+
+
 // 监听语言切换按钮
 document.querySelectorAll(".lang-btn").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -254,40 +310,67 @@ function updateScheduleDates(lang) {
     });
 }
 
-// Update the switchLanguage function to properly handle the email
+
+// Enhanced switchLanguage function for NFT page
 function switchLanguage(lang) {
+    // Update page title and meta tags
+    document.title = translations[lang]["nft-page-title"];
+    
     // Update text translations
     Object.keys(translations[lang]).forEach(id => {
         const element = document.getElementById(id);
         if (element) {
-            element.textContent = translations[lang][id];
-            // For timeline items, add transition animation
-            if (element.closest('.timeline li')) {
+            // Special handling for headers and titles
+            if (element.tagName === 'H1' || element.tagName === 'H2') {
                 element.style.transition = 'opacity 0.3s ease';
                 element.style.opacity = '0';
                 setTimeout(() => {
+                    element.textContent = translations[lang][id];
                     element.style.opacity = '1';
-                }, 100);
+                }, 150);
+            } else {
+                element.textContent = translations[lang][id];
             }
         }
     });
 
-    // Update dates format
-    updateScheduleDates(lang);
+    // Update guide section details
+    document.querySelectorAll('.guide-card').forEach(card => {
+        const summary = card.querySelector('summary h3');
+        if (summary) {
+            const key = summary.getAttribute('data-trans-key');
+            if (key && translations[lang][key]) {
+                summary.textContent = translations[lang][key];
+            }
+        }
+    });
 
-    // Handle email contact specifically
-    const contactTextElement = document.getElementById('contact-text');
-    const emailLink = document.createElement('a');
-    emailLink.href = 'mailto:hackathon.blockchain@terabox.jp';
-    emailLink.textContent = 'hackathon.blockchain@terabox.jp';
-    
-    if (contactTextElement) {
-        // Clear existing content
-        contactTextElement.textContent = translations[lang]['contact-text'] + ' ';
-        // Append the email link
-        contactTextElement.appendChild(emailLink);
-    }
+    // Update use cases section
+    document.querySelectorAll('.case-card h3').forEach(heading => {
+        const key = heading.getAttribute('data-trans-key');
+        if (key && translations[lang][key]) {
+            heading.textContent = translations[lang][key];
+        }
+    });
+
+    // Update showcase gallery titles
+    document.querySelectorAll('.gallery-item h3').forEach(heading => {
+        const key = heading.getAttribute('data-trans-key');
+        if (key && translations[lang][key]) {
+            heading.textContent = translations[lang][key];
+        }
+    });
+
+    // Update button states in language switcher
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        if (btn.getAttribute('data-lang') === lang) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
 }
+
 
 // Add these new translations to your existing translations object
 const defiTranslations = {
@@ -422,43 +505,26 @@ function formatDate(date, format, lang) {
         .replace("D", day);
 }
 
-// 优化切换语言函数
-function switchLanguage(lang) {
-    // 原有的语言切换逻辑保持不变
-    Object.keys(translations[lang]).forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.textContent = translations[lang][id];
-            // 为时间线项添加过渡动画
-            if (element.closest('.timeline li')) {
-                element.style.transition = 'opacity 0.3s ease';
-                element.style.opacity = '0';
-                setTimeout(() => {
-                    element.style.opacity = '1';
-                }, 100);
-            }
-        }
+
+
+// Initialize language switching functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Set default language (Chinese)
+    switchLanguage('zh');
+
+    // Add click handlers for language buttons
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const lang = btn.getAttribute("data-lang");
+            switchLanguage(lang);
+        });
     });
 
-    // 更新日期格式
-    updateScheduleDates(lang);
-
-    // 更新邮件地址显示
-    const emailElement = document.querySelector("#contact-text a");
-    if (emailElement) {
-        emailElement.textContent = "hackathon.blockchain@terabox.jp";
-    }
-}
-
-// 页面加载完成后初始化所有效果
-document.addEventListener('DOMContentLoaded', function() {
-    initializeTimelineAnimations();
-    initializePrizeAnimations();
-    initializeButtonEffects();
-    
-    // 初始化语言（默认使用中文）
-    switchLanguage('zh');
+    // Initialize guide interactions
+    initializeGuideInteractions();
 });
+
 
 // 添加页面滚动动画
 window.addEventListener('scroll', function() {
@@ -504,35 +570,110 @@ Object.keys(guideTranslations).forEach(lang => {
     translations[lang] = { ...translations[lang], ...guideTranslations[lang] };
 });
 
-// Add to script.js
+// Guide interactions function
 function initializeGuideInteractions() {
-    document.querySelectorAll('.guide-header').forEach(header => {
-        header.addEventListener('click', () => {
-            const details = header.parentElement;
-            const icon = header.querySelector('.expand-icon');
-            
-            // Add animation for smooth transition
-            if (details.open) {
-                icon.style.transform = 'rotate(0deg)';
-                icon.textContent = '+';
-            } else {
-                icon.style.transform = 'rotate(45deg)';
-                icon.textContent = '−';
-            }
-        });
+    document.querySelectorAll('.guide-card').forEach(card => {
+        const details = card.querySelector('details');
+        const summary = card.querySelector('summary');
+        if (details && summary) {
+            summary.addEventListener('click', (e) => {
+                e.preventDefault();
+                const isOpen = details.hasAttribute('open');
+                const icon = summary.querySelector('.expand-icon');
+                
+                if (isOpen) {
+                    details.removeAttribute('open');
+                    icon.textContent = '+';
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    details.setAttribute('open', '');
+                    icon.textContent = '−';
+                    icon.style.transform = 'rotate(45deg)';
+                }
+            });
+        }
     });
 }
 
-// Initialize when the document is loaded
-document.addEventListener('DOMContentLoaded', function() {
+// Enhanced switchLanguage function for NFT page
+function switchLanguage(lang) {
+    // Update page title and meta tags
+    document.title = translations[lang]["nft-page-title"];
+    
+    // Update text translations with ID
+    Object.keys(translations[lang]).forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            // Special handling for headers and titles
+            if (element.tagName === 'H1' || element.tagName === 'H2') {
+                element.style.transition = 'opacity 0.3s ease';
+                element.style.opacity = '0';
+                setTimeout(() => {
+                    element.textContent = translations[lang][id];
+                    element.style.opacity = '1';
+                }, 150);
+            } else {
+                element.textContent = translations[lang][id];
+            }
+        }
+    });
+
+    // Update elements with data-trans-key
+    document.querySelectorAll('[data-trans-key]').forEach(element => {
+        const key = element.getAttribute('data-trans-key');
+        if (translations[lang][key]) {
+            element.textContent = translations[lang][key];
+        }
+    });
+
+    // Update dates format if needed
+    if (typeof updateScheduleDates === 'function') {
+        updateScheduleDates(lang);
+    }
+
+    // Handle email contact specifically
+    const contactTextElement = document.getElementById('contact-text');
+    if (contactTextElement) {
+        const emailLink = document.createElement('a');
+        emailLink.href = 'mailto:hackathon.blockchain@terabox.jp';
+        emailLink.textContent = 'hackathon.blockchain@terabox.jp';
+        contactTextElement.textContent = translations[lang]['contact-text'] + ' ';
+        contactTextElement.appendChild(emailLink);
+    }
+
+    // Update button states in language switcher
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        if (btn.getAttribute('data-lang') === lang) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+}
+
+// Single initialization function
+function initializeApp() {
+    // Initialize language switcher
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const lang = btn.getAttribute("data-lang");
+            switchLanguage(lang);
+        });
+    });
+
+    // Initialize other features
+    initializeGuideInteractions();
     initializeTimelineAnimations();
     initializePrizeAnimations();
     initializeButtonEffects();
-    initializeGuideInteractions();
     
-    // Initialize with default language (Chinese)
+    // Set default language
     switchLanguage('zh');
-});
+}
+
+// Single DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', initializeApp);
 
 
 // Add to the existing translations object
